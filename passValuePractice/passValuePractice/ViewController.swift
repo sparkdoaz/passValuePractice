@@ -42,7 +42,9 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
 }
 
 extension ViewController: UITableViewDataSource {
@@ -58,11 +60,55 @@ extension ViewController: UITableViewDataSource {
         cell.label.text = fake[indexPath.row]
         cell.setBord()
         
+        //delegate的方式
+//        cell.delegate = self
+        
+        //addtarget 的方式
+//        cell.deleteBtn.tag = indexPath.row
+//        cell.deleteBtn.addTarget(self, action: #selector(clickedDelete(sender:)), for: .touchUpInside)
+//        
         
         return cell
         
     }
     
     
+    @objc func clickedDelete(sender: UIButton) {
+        print(sender.tag)
+//        print(fake)
+        fake.remove(at: sender.tag)
+//        let indexpath = tableView.indexPath(for: sender)
+        //我要動畫！！！！
+//        UIView.animate(withDuration: 2) {
+//            let indexPath = IndexPath(row: sender.tag, section: 0)
+//            self.tableView.deleteRows(at: [indexPath], with: .top)
+//        }
+        
+        
+        self.tableView.reloadData()
+        
+        
+    }
+    
+    
 }
 
+extension ViewController: FirstCellDelegate {
+    func deleteData(_ cell: FirstCell) {
+        print("okokokokokok")
+
+        guard let indexPath = tableView.indexPath(for: cell) else {return}
+        
+        //以下是完美的搭配。
+        fake.remove(at: indexPath.row)
+        
+        tableView.deleteRows(at: [indexPath], with: .top)
+        
+    }
+    
+    
+    
+    
+    
+    
+}
