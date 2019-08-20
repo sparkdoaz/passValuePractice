@@ -10,6 +10,8 @@ import UIKit
 
 class SecondViewController: UIViewController {
     
+    weak var delegate:SecondViewControllerDelegate?
+    
     let textField = UITextField()
     
     let uibutton = UIButton()
@@ -44,5 +46,8 @@ class SecondViewController: UIViewController {
     }
     
     
-    
+}
+
+protocol SecondViewControllerDelegate: AnyObject {
+    func passData(_ vc: SecondViewController)
 }

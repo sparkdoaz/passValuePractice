@@ -11,11 +11,17 @@ import UIKit
 class ViewController: UIViewController {
     
     var nextVC = SecondViewController()
+    
+//    var nextVCTwo: SecondViewController! {
+//        didSet {
+//            nextVCTwo.delegate = self
+//        }
+//    }
 
 
     @IBOutlet weak var tableView: UITableView!
     
-    var fake = ["2", "3", "4", "5"]
+    var fake = ["2", "3", "4", "5", "6", "7"]
     
     
     override func viewDidLoad() {
@@ -28,15 +34,19 @@ class ViewController: UIViewController {
         
         //tableView.estimatedRowHeight = 300
         
-        let barbutton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showNextVC))
+        let barbutton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(btnShowNextVC))
         
         navigationItem.rightBarButtonItem = barbutton
         
+        nextVC.delegate = self
+        
+//        nextVCTwo = SecondViewController()
     }
     
-    @objc func showNextVC() {
+    @objc func btnShowNextVC() {
         
         navigationController?.show(nextVC, sender: nil)
+        nextVC.textField.text = ""
         
     }
     
@@ -45,6 +55,13 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+//        tableView.deselectRow(at: indexPath, animated: true)
+        
+        nextVC.textField.text = fake[indexPath.row]
+        
+        show(nextVC, sender: nil)
+        
+        print(indexPath)
     }
 }
 
@@ -67,7 +84,7 @@ extension ViewController: UITableViewDataSource {
         cell.closure = { cell -> () in
 //            print(cell)
             self.fake.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
         }
         //delegate的方式
@@ -110,4 +127,15 @@ extension ViewController: FirstCellDelegate {
         tableView.deleteRows(at: [indexPath], with: .top)
         
     }
+}
+
+extension ViewController: SecondViewControllerDelegate {
+    func passData(_ vc: SecondViewController) {
+        print("okokok")
+//        vc.textField.text =
+    }
+    
+    
+    
+    
 }
