@@ -14,13 +14,17 @@ class FirstCell: UITableViewCell {
     
     @IBOutlet weak var deleteBtn: UIButton! {
         //delegate 方式 以下 偽IB Action
-        didSet {
-            deleteBtn.addTarget(self, action: #selector(deleteDataIBAction), for: .touchUpInside)
-        }
+//        didSet {
+//            deleteBtn.addTarget(self, action: #selector(deleteDataIBAction), for: .touchUpInside)
+//        }
         //delegate 方式 以上
+        
+        didSet {
+            deleteBtn.addTarget(self, action: #selector(deleteDataIBACtionClosure), for: .touchUpInside)
+        }
     }
     
-    
+    var closure: ((FirstCell) -> ())!
     
     @IBOutlet weak var label: UILabel!
     func setBord() {
@@ -33,6 +37,11 @@ class FirstCell: UITableViewCell {
     //delegate 方式
     @objc func deleteDataIBAction(sender: UIButton) {
         delegate?.deleteData(self)
+    }
+    
+    //clousure
+    @objc func deleteDataIBACtionClosure() {
+        closure(self)
     }
     
 }

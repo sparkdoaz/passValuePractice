@@ -31,6 +31,7 @@ class ViewController: UIViewController {
         let barbutton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showNextVC))
         
         navigationItem.rightBarButtonItem = barbutton
+        
     }
     
     @objc func showNextVC() {
@@ -60,6 +61,15 @@ extension ViewController: UITableViewDataSource {
         cell.label.text = fake[indexPath.row]
         cell.setBord()
         
+        //closure
+//        cell.firstVC = self
+        
+        cell.closure = { cell -> () in
+//            print(cell)
+            self.fake.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
+        }
         //delegate的方式
 //        cell.delegate = self
         
@@ -83,13 +93,8 @@ extension ViewController: UITableViewDataSource {
 //            let indexPath = IndexPath(row: sender.tag, section: 0)
 //            self.tableView.deleteRows(at: [indexPath], with: .top)
 //        }
-        
-        
         self.tableView.reloadData()
-        
-        
     }
-    
     
 }
 
@@ -105,10 +110,4 @@ extension ViewController: FirstCellDelegate {
         tableView.deleteRows(at: [indexPath], with: .top)
         
     }
-    
-    
-    
-    
-    
-    
 }
