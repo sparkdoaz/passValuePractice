@@ -51,6 +51,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="deleteBtn" destination="T1B-Db-mg4" id="0iR-ui-hVt"/>
+                                            <outlet property="label" destination="EM2-60-F3T" id="vH5-fJ-fyD"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -13,7 +13,7 @@ class FirstCell: UITableViewCell {
     weak var delegate: FirstCellDelegate?
     
     @IBOutlet weak var deleteBtn: UIButton!
-    
+    @IBOutlet weak var label: UILabel!
     func setBord() {
         deleteBtn.layer.masksToBounds = true
         deleteBtn.layer.borderWidth = 3

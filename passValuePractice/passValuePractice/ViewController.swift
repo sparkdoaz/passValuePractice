@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    
+    var fake = ["2", "3", "4", "5"]
     
     
     override func viewDidLoad() {
@@ -36,13 +36,15 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return fake.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "firstCell", for: indexPath) as? FirstCell else { fatalError() }
+        
         cell.backgroundColor = .white
+        cell.label.text = fake[indexPath.row]
         cell.setBord()
         //        cell.deleteBtn.layer.borderColor = UIColor.black.cgColor
         
