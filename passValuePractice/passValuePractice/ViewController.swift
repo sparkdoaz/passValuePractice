@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var nextVC = SecondViewController()
 
 
     @IBOutlet weak var tableView: UITableView!
@@ -22,11 +24,20 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        //        tableView.rowHeight = UITableView.automaticDimension
+        //tableView.rowHeight = UITableView.automaticDimension
         
-        //        tableView.estimatedRowHeight = 300
+        //tableView.estimatedRowHeight = 300
+        
+        let barbutton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showNextVC))
+        
+        navigationItem.rightBarButtonItem = barbutton
     }
     
+    @objc func showNextVC() {
+        
+        navigationController?.show(nextVC, sender: nil)
+        
+    }
     
 }
 
@@ -46,7 +57,7 @@ extension ViewController: UITableViewDataSource {
         cell.backgroundColor = .white
         cell.label.text = fake[indexPath.row]
         cell.setBord()
-        //        cell.deleteBtn.layer.borderColor = UIColor.black.cgColor
+        
         
         return cell
         
