@@ -16,6 +16,8 @@ class SecondViewController: UIViewController {
     
     let uibutton = UIButton()
     
+    var passIndexPath: Int?
+    
     func setConstraint() {
         uibutton.translatesAutoresizingMaskIntoConstraints = false
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -43,11 +45,27 @@ class SecondViewController: UIViewController {
         view.addSubview(textField)
         print("1111")
         setConstraint()
+        
+        uibutton.addTarget(self, action: #selector(passDataToFirstVC), for: .touchUpInside)
     }
     
-    
+    @objc func passDataToFirstVC() {
+
+        navigationController?.popViewController(animated: true)
+        
+        if passIndexPath != nil {
+            //修改
+            delegate?.passData(self)
+        } else {
+            //新增
+            delegate?.addData(self)
+        }
+        
+    }
 }
 
 protocol SecondViewControllerDelegate: AnyObject {
     func passData(_ vc: SecondViewController)
+    
+    func addData(_ vc: SecondViewController)
 }

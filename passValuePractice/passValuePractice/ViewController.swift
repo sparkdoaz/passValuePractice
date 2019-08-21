@@ -58,9 +58,11 @@ extension ViewController: UITableViewDelegate {
 //        tableView.deselectRow(at: indexPath, animated: true)
         
         nextVC.textField.text = fake[indexPath.row]
+        nextVC.passIndexPath = indexPath.row
         
         show(nextVC, sender: nil)
         
+//        btnShowNextVC()
         print(indexPath)
     }
 }
@@ -87,6 +89,7 @@ extension ViewController: UITableViewDataSource {
 //            tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
         }
+        
         //delegate的方式
 //        cell.delegate = self
         
@@ -104,13 +107,16 @@ extension ViewController: UITableViewDataSource {
         print(sender.tag)
 //        print(fake)
         fake.remove(at: sender.tag)
+        
+//        super.view 找indexpath 找到cell後，拿cell去問tablecview的 indexpath
+        
 //        let indexpath = tableView.indexPath(for: sender)
         //我要動畫！！！！
 //        UIView.animate(withDuration: 2) {
 //            let indexPath = IndexPath(row: sender.tag, section: 0)
 //            self.tableView.deleteRows(at: [indexPath], with: .top)
 //        }
-        self.tableView.reloadData()
+//        self.tableView.reloadData()
     }
     
 }
@@ -130,12 +136,22 @@ extension ViewController: FirstCellDelegate {
 }
 
 extension ViewController: SecondViewControllerDelegate {
-    func passData(_ vc: SecondViewController) {
-        print("okokok")
-//        vc.textField.text =
+    func addData(_ vc: SecondViewController) {
+        guard let text = vc.textField.text else { return}
+        
+        if text == "" {
+            return
+        }
+        
+        fake.append(text)
+        tableView.reloadData()
     }
     
-    
-    
-    
+    func passData(_ vc: SecondViewController) {
+        
+        guard let indexPath = vc.passIndexPath else { return }
+        
+        fake[indexPath] = vc.textField.text ?? "no"
+        tableView.reloadData()
+    }
 }
