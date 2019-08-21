@@ -10,21 +10,23 @@ import UIKit
 
 class FirstCell: UITableViewCell {
     
+    //👇是 Cell 利用 delegate 傳值到 FirstVC
     weak var delegate: FirstCellDelegate? 
     
     @IBOutlet weak var deleteBtn: UIButton! {
-        //delegate 方式 以下 偽IB Action
+        
+        //👇是 Cell 利用 delegate 傳值到 FirstVC
 //        didSet {
 //            deleteBtn.addTarget(self, action: #selector(deleteDataIBAction), for: .touchUpInside)
 //        }
-        //delegate 方式 以上
         
+        
+        //👇是 cell 利用 closure 傳值到 FirstVC，並且用 addTarget 去生成 function
         didSet {
             deleteBtn.addTarget(self, action: #selector(deleteDataIBACtionClosure), for: .touchUpInside)
         }
     }
-    
-    var closure: ((FirstCell) -> ())!
+
     
     @IBOutlet weak var label: UILabel!
     func setBord() {
@@ -34,17 +36,22 @@ class FirstCell: UITableViewCell {
         deleteBtn.layer.cornerRadius = 5
     }
     
-    //delegate 方式
+    //👇是 Cell 利用 delegate 傳值到 FirstVC
     @objc func deleteDataIBAction(sender: UIButton) {
         delegate?.deleteData(self)
     }
     
-    //clousure
+    //👇是 cell 利用 closure 傳值到 FirstVC
+    var closure: ((FirstCell) -> ())!
+    
+    ////👇是 Cell 利用 closure 傳值到 FirstVC
     @objc func deleteDataIBACtionClosure() {
         closure(self)
     }
     
 }
+
+//👇是 Cell 利用 delegate 傳值到 FirstVC
 protocol FirstCellDelegate: AnyObject {
     
     func deleteData(_ cell: FirstCell)

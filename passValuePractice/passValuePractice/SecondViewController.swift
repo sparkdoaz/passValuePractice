@@ -10,13 +10,18 @@ import UIKit
 
 class SecondViewController: UIViewController {
     
+    //👇是 SecondVC 利用 delegate 傳值到 FirstVC
     weak var delegate:SecondViewControllerDelegate?
+    
+    //👇是 SecondVC 利用 delegate 傳值到 FirstVC
+    var passIndexPath: Int?
+    
+    //👇是 SecondVC 利用 closure 傳值到 FirstVC
+    var passTextclosure: (() -> ())?
     
     let textField = UITextField()
     
     let uibutton = UIButton()
-    
-    var passIndexPath: Int?
     
     func setConstraint() {
         uibutton.translatesAutoresizingMaskIntoConstraints = false
@@ -40,10 +45,10 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .brown
+        view.backgroundColor = .white
         view.addSubview(uibutton)
         view.addSubview(textField)
-        print("1111")
+        
         setConstraint()
         
         uibutton.addTarget(self, action: #selector(passDataToFirstVC), for: .touchUpInside)
@@ -53,19 +58,26 @@ class SecondViewController: UIViewController {
 
         navigationController?.popViewController(animated: true)
         
-        if passIndexPath != nil {
-            //修改
-            delegate?.passData(self)
-        } else {
-            //新增
-            delegate?.addData(self)
-        }
+        //👇是 SecondVC 利用 delegate 傳值到 FirstVC
+//        if passIndexPath != nil {
+//            //修改
+//            delegate?.delegateModifyData()
+//        } else {
+//            //新增
+//            delegate?.delegateAddData()
+//        }
         
+        //👇是 SecondVC 利用 closure 傳值到 FirstVC
+        guard let passTextclosure = passTextclosure else {return}
+        passTextclosure()
     }
 }
 
+//👇是 SecondVC 利用 delegate 傳值到 FirstVC
 protocol SecondViewControllerDelegate: AnyObject {
-    func passData(_ vc: SecondViewController)
     
-    func addData(_ vc: SecondViewController)
+    func delegateModifyData()
+    
+    func delegateAddData()
+    
 }
